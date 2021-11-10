@@ -1,0 +1,34 @@
+- name: Projet1
+  hosts: victim
+  become: yes
+
+  tasks:
+  - name: Installe nodeJs
+    apt:
+      name: '{{ item }}'
+      state: latest
+      loop:
+      - nodejs
+      - npm
+  
+  - name: Clone repository GitHub application nodeJs
+    git:
+      repo: https://gitlab.com/cdufour1/nodeapp.git
+      dest: /home/osboxes/nodeapp
+      force: yes
+  
+  - name: Install deps
+    command: 
+      cmd: npm install 
+    args:
+      chdir: nodeapp/
+  
+  - name: Copy script files
+    copy:
+      src: files/{{ item }}.sh
+      dest: nodeapp/
+      mode: 'u+x'
+      loop: ['start', 'stop']
+
+  - name: Start app 
+    shell: cd nodeapp; /bin/bash start.sh

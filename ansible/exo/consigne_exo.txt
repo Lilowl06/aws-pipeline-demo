@@ -1,0 +1,12 @@
+*** Exos Ansibles ***
+
+1/
+Créer un playbook avec installation de nodejs sur les machines cibles.
+Ce playbook devra également exécuter une application nodejs qui sera copié depuis le node master vers les cibles.
+L'application nodeJs est dans le gitLab de cdufour, récuperer les sources (dossier nodeapp) dans les machines cibles par gitclone
+(https://gitlab.com/cdufour1/nodeapp)
+
+Instalaltion de node nodeJs
+Recupération des sources
+Exécution de nodeJS pour 3000
+Quand je vais sur le site j'ai à l'aide et l'autre truc

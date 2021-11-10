@@ -1,0 +1,28 @@
+- name: Demo command et Shell
+  hosts: dev
+
+  tasks:
+  - name: demo1
+    command: pwd 
+    register: cmd_out # objet contenant stdout et stdr (enregistrement du retourt de l'exec du module command)
+  
+  - debug: var=cmd_out.stdout
+
+  # on s'expose à une erreur de type File exists en utilisant mkdir ! si on utilise pas state management
+  # - name: demo2
+  #  command: mkdir toto
+
+  - name: demo3
+    command: echo "coucou_command" > coucou_command.txt # le fichier coucou n'existe pas !
+  - debug: var=demo3_out
+  # la sortie standard est "coucou > coucou.txt" : le module commande échappe les caractères de redirection
+  # Ils sont neutralisé et non interprété. C'est exprès pour la sécurisation.
+
+  - name: demo4
+    shell: echo "coucou from shell" > coucou_shell.txt # il n'y a pas de gestion d'état, 
+  # donc 'change' sera toujours true car il écrase la fichier à chaque fois.
+
+  - copy: src=files/hello.sh dest=hello.sh mode=0777
+
+  - name: demo5
+    shell: ./hello.sh

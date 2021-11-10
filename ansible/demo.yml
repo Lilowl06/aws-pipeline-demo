@@ -1,0 +1,25 @@
+-
+  name: Demo
+  hosts: dev
+  tasks: # ce sont les tâches
+    - name: Demo Ping # chaque tâche a un nom
+      ping: 
+    - name: Demo création de dossier
+      file:
+        path: /tmp/demo
+        state: directory
+        mode: 0755
+    - name: Création dossier demo2
+      # become: yes # instruction qui peut etre utilisée au niveau du playbook et 
+      # les tâches se feront sous l'identité de qui l'on souhaite devenir ; yes = root
+      file:
+        path: /tmp/demo2
+        state: directory
+        mode: 0755
+
+    - name: Installation du serveur apache
+    #- name: désinstallation du serveur apache
+      become: yes
+    #  become: absente
+      apt:
+        name: apache2

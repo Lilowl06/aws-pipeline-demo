@@ -1,0 +1,13 @@
+# Cette tâche doit être exécuter en tant que sudo
+- name: Configure Sudoer
+  hosts: all
+  become: yes
+  tasks: 
+    - name : suprimme la demande de mdp pour le groupe sudo
+      lineinfile:
+        path: /etc/sudoers
+        regexp: '^%sudo' # ^ : veut dire la ligne doit commencer par ici : sudo
+        line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s' # commande spécique au fichier sudoers, vérification de la validité
+        # du fichier sudo, permet de renvoyer un code erreur qui fait échouer la commande
+        # donc pas d'enregistrement de l'erreur et d'éviter de corrompre le fichier.

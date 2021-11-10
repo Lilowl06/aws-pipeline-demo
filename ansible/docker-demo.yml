@@ -1,0 +1,19 @@
+- name: Docker Demo 
+  hosts: victim 
+
+  tasks: 
+
+  - name: Install pip
+    become: yes
+    apt: name=pip state=latest
+  
+  - name: Install Docker Python Module #permet à python de faire des commandes docker
+    pip:
+      name: docker==5.0.3
+
+
+  - name: demo1
+    docker_container:
+      name: bb
+      image: busybox
+

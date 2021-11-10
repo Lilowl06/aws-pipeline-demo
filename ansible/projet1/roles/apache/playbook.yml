@@ -1,0 +1,6 @@
+- name: Projet1
+  hosts: dev
+  become: yes
+
+  roles:
+    - apache
